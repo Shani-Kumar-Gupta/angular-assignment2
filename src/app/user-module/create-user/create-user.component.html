@@ -1,0 +1,124 @@
+<div class="card cardBody bg-dark p-5 card-shadow">
+<form [formGroup]="signupForm">
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label textColor font-weight-bold">Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" formControlName="name" placeholder="Name">
+          <small class="text-danger" *ngIf="!signupForm.get('name').valid && signupForm.get('name').touched">Please enter valid name</small>
+    
+        </div>
+        
+        </div>
+
+    <fieldset class="form-group">
+        <div class="row">
+          <legend class="col-form-label col-sm-2 pt-0 textColor font-weight-bold">Gender</legend>
+          <div class="col-sm-10">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input gender" type="radio"  formControlName="gender" value="male">
+              <label class="form-check-label textColor font-weight-bold" >
+                Male
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input gender" type="radio"  formControlName="gender" value="female">
+              <label class="form-check-label textColor font-weight-bold" >
+                Female
+              </label>
+            </div>
+            
+          </div>
+        </div>
+      </fieldset>
+    
+    <div class="form-group row">
+      <label for="email" class="col-sm-2 col-form-label textColor font-weight-bold">Email</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="email" placeholder="Email">
+        <small class="text-danger" *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">Please enter valid email</small>
+    
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="mobile" class="col-sm-2 col-form-label textColor font-weight-bold">Mobile</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile">
+        <small class="text-danger" *ngIf="!signupForm.get('mobile').valid && signupForm.get('mobile').touched">Please enter valid mobile number</small>
+    
+      </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="category"  class="col-sm-2 col-form-label textColor font-weight-bold">Category</label>
+        <div class="col-sm-10">
+            <select formControlName="category" class="custom-select">
+            <option value="">Select Category</option>
+            <option value="General"> General</option>
+            <option value="SC/ST"> SC/ST</option>
+            <option value="OBC"> OBC</option>
+            </select>
+            <small class="text-danger" *ngIf="!signupForm.get('category').valid && signupForm.get('category').touched">Please select any option</small>
+    
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2 textColor font-weight-bold">Technology</div>
+        <div class="col-sm-10">
+            <div class="form-check form-check-inline" *ngFor="let control of technologiesArray.controls; let i = index;">
+                <input class="form-check-input" [formControl]="control" 
+                (change)="getSelectedTechnologies()"
+                type="checkbox" id="checkbox{{i}}">
+                <label class="form-check-label textColor font-weight-bold" for="checkbox{{i}}">{{technologies[i]}}</label>
+            </div><br>
+            <small class="text-danger" *ngIf="selectTechnologyError && checkTechnologyIsTouched()">Please select at least one technology</small>
+    
+        </div>
+        
+    </div>
+    
+    <div class="form-group row">
+      <label for="mobile" class="col-sm-2 col-form-label textColor font-weight-bold">Profile Picture</label>
+        <div class="col-sm-10">
+          <input type="file" class="textColor font-weight-bold" formControlName="profilepic" (change)="handleFileInput($event.target.files)">
+          <small class="text-danger" *ngIf="!signupForm.get('profilepic').valid && signupForm.get('profilepic').touched">Please select a valid picture format eg. .png, .jpeg, .jpg</small>
+        </div>
+    </div>
+      
+    <div class="form-group row">
+      <div class="col-12 text-center">
+        <button type="submit" class="btn bg-primary btn-shadow text-white" [disabled]="signupForm.invalid || selectTechnologyError" (click)="open(content)">Preview</button> 
+      </div>
+    </div>
+</form>
+</div>
+
+
+  <ng-template #content let-modal>
+    <div class="modal-header bg-dark">
+      <h4 class="modal-title font-weight-bold text-white" id="modal-basic-title">Your Details</h4>
+      <button type="button" class="close textColor" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <ul class="list-group text-white">
+        <li class="list-group-item bg-dark"><span class="text-white font-weight-bold">Name: </span> {{ signupForm.value.name }}</li>
+        <li class="list-group-item bg-dark"><span class="text-white font-weight-bold">Gender: </span> {{ signupForm.value.gender }}</li>
+        <li class="list-group-item bg-dark"><span class="text-white font-weight-bold">Email: </span> {{ signupForm.value.email }}</li>
+        <li class="list-group-item bg-dark"><span class="text-white font-weight-bold">Mobile: </span> {{ signupForm.value.mobile }}</li>
+        <li class="list-group-item bg-dark"><span class="text-white font-weight-bold">Category: </span> {{ signupForm.value.category }}</li>
+        <li class="list-group-item bg-dark"><span class="text-white font-weight-bold">Technology: </span> {{ selectedTechnologies }}</li>
+        <li class="list-group-item bg-dark"><span class="text-white font-weight-bold">Profile Picture: </span> <img [src]="imageUrl" class="img-fluid img-responsive" style="height:180px;width:180px;" alt="Not uploaded"></li>
+        
+    </ul>
+    
+    </div>
+
+    <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="saveUserData();modal.dismiss('Cross click')">Submit</button>
+    </div>
+  </ng-template>

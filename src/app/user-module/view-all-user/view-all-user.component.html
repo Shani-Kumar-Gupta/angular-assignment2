@@ -1,0 +1,30 @@
+<body>
+  <table
+    class="table table_style table-responsive-lg table-hover table_borderless bg-white"
+    id="table"
+  >
+    <thead>
+      <tr>
+        <th scope="col" class="bg-dark text-white">Name</th>
+        <th scope="col" class="bg-dark text-white">Gender</th>
+        <th scope="col" class="bg-dark text-white">Email</th>
+        <th scope="col" class="bg-dark text-white">Mobile No.</th>
+        <th scope="col" class="bg-dark text-white">Category</th>
+        <th scope="col" class="bg-dark text-white">Technology</th>
+        <th scope="col" class="bg-dark text-white">Profile Picture</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nameArray; let idx = index">
+        <td class="text-dark">{{ nameArray[idx] }}</td>
+        <td class="text-dark">{{ genderArray[idx] }}</td>
+        <td class="text-dark">{{ emailArray[idx] }}</td>
+        <td class="text-dark">{{ mobileArray[idx] }}</td>
+        <td class="text-dark">{{ categoryArray[idx] }}</td>
+        <td class="text-dark">{{ technologyArray[idx] }}</td>
+        <td class="text-dark"><img [src]="imageUrlArray[idx]" height="40px" width="40px" alt="Not uploaded"/></td>
+      </tr>
+    </tbody>
+    <tbody></tbody>
+  </table>
+</body>

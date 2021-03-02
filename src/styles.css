@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.btn-shadow{
+    box-shadow: 5px 5px 10px rgb(0 0 0 / 40%);
+ }
+ .card-shadow{
+    box-shadow: 10px 10px 10px rgb(0 0 0 / 40%);
+ }
